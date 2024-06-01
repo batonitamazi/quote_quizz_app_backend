@@ -12,5 +12,7 @@ namespace quote_quizz_app_backend.Context
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<UserAchievement> UserAchievements { get; set; }
+
+        public DbSet<QuizResult> QuizResults { get; set; }
     }
 }

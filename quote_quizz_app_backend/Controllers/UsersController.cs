@@ -35,7 +35,7 @@ namespace quote_quizz_app_backend.Controllers
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequest model)
-        {
+            {
             try
             {
                 var token = await _userService.LoginUser(model.Username, model.Password);

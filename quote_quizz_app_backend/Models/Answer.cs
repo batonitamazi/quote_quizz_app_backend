@@ -9,6 +9,9 @@ namespace quote_quizz_app_backend.Models
         [Required]
         public string Text { get; set; }
 
+        [Required]
+        public bool IsCorrect { get; set; }
+
         public int QuestionId { get; set; }
         public Question Question { get; set; }
     }
