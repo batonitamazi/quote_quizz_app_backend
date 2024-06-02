@@ -9,5 +9,6 @@ namespace quote_quizz_app_backend.Repositories.UserRepository
         Task CreateUser(User user);
         Task UpdateUser(User user);
         Task DeleteUser(int userId);
+        Task<List<User>> GetAllUsers();
     }
 }

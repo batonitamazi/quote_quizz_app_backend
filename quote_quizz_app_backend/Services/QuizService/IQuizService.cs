@@ -10,6 +10,10 @@ namespace quote_quizz_app_backend.Services.QuizService
         Task<QuizDto> GetQuizWithQuestionsAndAnswersAsync(int quizId);
         Task SubmitQuizResultAsync(QuizResultDto quizResultDto);
 
+        Task CreateQuiz(QuizDto quiz);
+
+        Task DeleteQuiz(int quizId);
+
 
 
     }

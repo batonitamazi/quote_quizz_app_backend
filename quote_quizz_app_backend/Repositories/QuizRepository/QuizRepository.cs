@@ -35,5 +35,17 @@ namespace quote_quizz_app_backend.Repositories.QuizRepository
             await _context.SaveChangesAsync();
         }
 
+        public async Task CreateQuiz(Quiz quizz)
+        {
+            await _context.Quizzes.AddAsync(quizz);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteQuiz(Quiz quiz)
+        {
+            _context.Quizzes.Remove(quiz);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

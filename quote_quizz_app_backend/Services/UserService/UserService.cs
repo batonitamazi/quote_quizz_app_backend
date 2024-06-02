@@ -7,7 +7,8 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
-
+using quote_quizz_app_backend.Dtos;
+using Microsoft.EntityFrameworkCore;
 
 namespace quote_quizz_app_backend.Services.UserService
 {
@@ -48,8 +49,14 @@ namespace quote_quizz_app_backend.Services.UserService
         }
 
 
-        public async Task UpdateUser(int userId, User user)
+        public async Task UpdateUser(int userId, UserDto data)
         {
+            var user = new User()
+            {
+                UserName = data.UserName,
+                Password = data.Password,
+                IsDisabled = data.IsDisabled,
+            };
             var existingUser = await _userRepository.GetUserById(userId);
             if (existingUser == null)
             {
@@ -58,8 +65,25 @@ namespace quote_quizz_app_backend.Services.UserService
 
             existingUser.UserName = user.UserName;
             existingUser.PasswordHash = user.PasswordHash;
+            existingUser.IsDisabled = user.IsDisabled;
 
             await _userRepository.UpdateUser(existingUser);
+        }
+        public async Task DeleteUser(int id)
+        {
+            var user = await _userRepository.GetUserById(id);
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            await _userRepository.DeleteUser(id);
+        }
+
+        public async Task<List<UserDto>> GetUsers()
+        {
+            var users = await _userRepository.GetAllUsers();
+            return users.Select(k => new UserDto() { Id = k.Id, IsDisabled = k.IsDisabled, UserName = k.UserName}).ToList();
         }
 
         private string GenerateJwtToken(User user)
@@ -79,6 +103,7 @@ namespace quote_quizz_app_backend.Services.UserService
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
+        
 
 
         private string HashPassword(string password)

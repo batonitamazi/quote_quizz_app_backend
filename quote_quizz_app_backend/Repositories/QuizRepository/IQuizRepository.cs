@@ -9,6 +9,9 @@ namespace quote_quizz_app_backend.Repositories.QuizRepository
         Task<Quiz> GetQuizWithQuestionsAndAnswersAsync(int quizId);
         Task SaveQuizResultAsync(QuizResult quizResult);
 
+        Task CreateQuiz(Quiz quiz); 
+        Task DeleteQuiz(Quiz quiz);
+
 
 
     }

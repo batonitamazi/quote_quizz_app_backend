@@ -39,6 +39,10 @@ namespace quote_quizz_app_backend.Repositories.UserRepository
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
         }
+        public async Task<List<User>> GetAllUsers()
+        {
+            return await _context.Users.ToListAsync();
+        }
 
 
     }

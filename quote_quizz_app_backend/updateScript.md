@@ -79,3 +79,11 @@ BEGIN
         CONSTRAINT FK_QuizResults_Quizzes FOREIGN KEY (QuizId) REFERENCES dbo.Quizzes(Id);
 END;
 GO
+
+IF OBJECT_ID('dbo.Users', 'U') IS NOT NULL AND COL_LENGTH('dbo.Users', 'IsDisabled') IS NULL
+BEGIN
+    ALTER TABLE dbo.Users
+    ADD IsDisabled BIT NOT NULL DEFAULT 0;  -- Add the IsDisabled column with default value 0 (false)
+END;
+GO
+

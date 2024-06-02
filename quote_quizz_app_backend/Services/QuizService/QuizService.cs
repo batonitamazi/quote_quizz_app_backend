@@ -1,4 +1,5 @@
-﻿using quote_quizz_app_backend.Dtos;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using quote_quizz_app_backend.Dtos;
 using quote_quizz_app_backend.Models;
 using quote_quizz_app_backend.Repositories.QuizRepository;
 
@@ -54,6 +55,36 @@ namespace quote_quizz_app_backend.Services.QuizService
             };
 
             await quizRepository.SaveQuizResultAsync(quizResult);
+        }
+
+        public async Task CreateQuiz(QuizDto dto)
+        {
+            var quiz = new Quiz
+            {
+                Name = dto.Name,
+                Questions = dto.Questions.Select(q => new Question
+                {
+                    Text = q.Question,
+                    Answers = q.Options.Select(o => new Answer
+                    {
+                        Text = o,
+                        IsCorrect = o == q.Answer
+                    }).ToList()
+                }).ToList()
+            };
+            await quizRepository.CreateQuiz(quiz);
+        }
+        public async Task DeleteQuiz(int id)
+        {
+            var data = await quizRepository.GetQuizWithQuestionsAndAnswersAsync(id);
+            if(data != null)
+            {
+                await quizRepository.DeleteQuiz(data);
+
+            }
+
+
+
         }
 
     }
